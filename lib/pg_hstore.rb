@@ -25,6 +25,10 @@ module PgHstore
       k = unescape unquote(k, DOUBLE_QUOTE)
       k = k.to_sym if symbolize_keys
       v = (v =~ NULL) ? nil : unescape(unquote(v, DOUBLE_QUOTE))
+      # For the special case of a string that appears to contain an array, eval that array
+      if v =~ /^\[.*\]$/
+        v = (eval v) rescue v
+      end
       memo[k] = v
       memo
     end
