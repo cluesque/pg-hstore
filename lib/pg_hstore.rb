@@ -27,9 +27,9 @@ module PgHstore
       v = (v =~ NULL) ? nil : unescape(unquote(v, DOUBLE_QUOTE))
       # For the special case of a string that appears to contain an array, eval that array
       # If it won't parse for any reason, fall back to the string
-      if v =~ /^\[.*\]$/
-        begin; eval v; rescue Exception => err; v; end
-      end
+      # if v =~ /^\[.*\]$/
+      #   begin; eval v; rescue Exception => err; v; end
+      # end
       memo[k] = v
       memo
     end
